@@ -1,9 +1,14 @@
 version: '2'
 services:
   redis:
-    image: redis:redis-5.0.5_cluster-1.0
-    build: ./redis
-    command: redis-server --cluster-enabled yes --bind 0.0.0.0 --loglevel warning
+#    image: redis:redis-5.0.5_cluster-1.0
+    image: redis:5.0.5-alpine
+#    build: ./redis
+    volumes:
+      - ./alpine/localtime:/etc/localtime
+      - ./alpine/timezone:/etc/timezone
+      - ./redis/redis.conf:/etc/redis/redis.conf
+    command: redis-server /etc/redis/redis.conf --cluster-enabled yes --bind 0.0.0.0 --loglevel warning
     ports: 
      - 6379
      - 16379
